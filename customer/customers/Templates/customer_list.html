@@ -1,0 +1,27 @@
+<!-- customers/templates/customers/customer_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="mt-5">
+    <h1>Customers List</h1>
+    <ul>
+      {% for customer in customers %}
+        <li>
+          <strong>Name: </strong> {{ customer.name }}<br>
+          <strong>Address: </strong> {{ customer.address }}<br>
+          <strong>Customer Number: </strong> {{ customer.customer_number }}<br>
+          <strong>Meter Serial Number: </strong> {{ customer.meter_serial_number }}<br>
+          
+          <!-- Delete form -->
+          <form method="post" action="{% url 'delete_customer' customer.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ customer.name }}?')">Delete</button>
+          </form>
+          
+          <!-- Update link -->
+          <a href="{% url 'update_customer' customer.id %}" class="btn btn-primary">Update</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
